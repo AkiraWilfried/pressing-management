@@ -1,15 +1,36 @@
-# Le frontend est un dépôt git autonome (github.com/AkiraWilfried/pressing-management)
-/frontend/
+# Dépendances et builds
+node_modules/
+dist/
+dist-ssr/
+*.local
 
-# Artefacts Python / backend
-backend/venv/
+# Artefacts Python
+venv/
+.venv/
 __pycache__/
 *.pyc
 
 # Données locales et secrets
-backend/pressing.db
 *.db
+*.sqlite3
 .env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
 
 # Captures de test
 screenshots/
+
+# Outillage local
+.qoder/
+
+# Éditeur / OS
+.vscode/
+.idea/
+.DS_Store

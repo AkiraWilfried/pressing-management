@@ -1,0 +1,241 @@
+/* ============================================
+   GLOBAL SEARCH — Topbar search avec dropdown
+   ============================================ */
+
+.gs-wrapper {
+  flex: 1;
+  max-width: 520px;
+  min-width: 0;
+  position: relative;
+  align-self: center;
+}
+
+/* ── Input ─────────────────────────────── */
+.gs-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gs-icon {
+  position: absolute;
+  left: var(--space-4);
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.gs-input {
+  width: 100%;
+  padding: 0.5rem 2.5rem 0.5rem 2.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: var(--color-bg-subtle);
+  transition: all var(--transition-fast);
+  /* Reset navigateur */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.gs-input::-webkit-search-cancel-button {
+  display: none; /* On gère le clear nous-mêmes */
+}
+
+.gs-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 3px var(--color-primary-muted);
+}
+
+.gs-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.gs-clear {
+  position: absolute;
+  right: var(--space-3);
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.gs-clear:hover {
+  background: var(--color-text-muted);
+  color: var(--color-surface);
+}
+
+/* ── Dropdown ──────────────────────────── */
+.gs-dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  right: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  z-index: 200;
+  overflow: hidden;
+  animation: gsSlideDown 0.15s ease;
+}
+
+@keyframes gsSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Sections ──────────────────────────── */
+.gs-section {
+  padding: var(--space-2) 0;
+}
+
+.gs-section + .gs-section {
+  border-top: 1px solid var(--color-border-light);
+}
+
+.gs-section-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Items ─────────────────────────────── */
+.gs-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition-fast);
+}
+
+.gs-item:hover,
+.gs-item.active {
+  background: var(--color-primary-light);
+}
+
+/* Avatar client */
+.gs-item-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+/* Badge commande */
+.gs-item-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md);
+  background: var(--color-info-muted);
+  color: var(--color-info);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gs-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gs-item-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gs-item-client {
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-muted);
+}
+
+.gs-item-sub {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Empty ─────────────────────────────── */
+.gs-empty {
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* ── Footer raccourcis ─────────────────── */
+.gs-footer {
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--color-border-light);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  background: var(--color-bg-subtle);
+}
+
+.gs-footer kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: var(--font-family);
+  color: var(--color-text-secondary);
+}
+
+/* ── Responsive ────────────────────────── */
+@media (max-width: 768px) {
+  .gs-wrapper {
+    max-width: none;
+    flex: 1;
+  }
+
+  .gs-dropdown {
+    position: fixed;
+    left: var(--space-4);
+    right: var(--space-4);
+    top: calc(var(--topbar-height) + var(--space-2));
+  }
+}

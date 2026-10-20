@@ -2,10 +2,10 @@ from sqlalchemy import Column, String, Float, DateTime, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
-from app.database import Base
+from app.database import Base, SoftDeletable
 
 
-class Paiement(Base):
+class Paiement(Base, SoftDeletable):
     __tablename__ = "paiements"
 
     id = Column(String, primary_key=True, index=True)

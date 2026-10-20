@@ -1,0 +1,402 @@
+/* ============================================
+   CLIENT ORDERS — page détail commandes client
+   Utilise le design-system.css
+   ============================================ */
+
+/* Padding et fond gérés par .main-content (Layout.css) */
+.client-orders-page {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ── Topbar interne ────────────────────── */
+.client-orders-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.co-back-btn {
+  padding: var(--space-2) var(--space-3);
+  flex-shrink: 0;
+}
+
+.co-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.co-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: var(--space-1) 0 0;
+}
+
+/* ── Client card ───────────────────────── */
+.co-client-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.co-client-identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1;
+  min-width: 0;
+}
+
+.co-client-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-xl);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+  letter-spacing: -0.02em;
+}
+
+.co-client-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.co-client-name {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin: 0 0 var(--space-2);
+}
+
+.co-client-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.co-client-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Stats droite */
+.co-client-stats {
+  display: flex;
+  gap: var(--space-6);
+  flex-shrink: 0;
+}
+
+.co-client-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: left;
+}
+
+.co-client-stat strong {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.co-client-stat span {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.co-stat-icon {
+  flex-shrink: 0;
+}
+
+.co-stat-icon.blue   { color: var(--color-info);    }
+.co-stat-icon.orange { color: var(--color-warning);  }
+.co-stat-icon.green  { color: var(--color-success);  }
+
+/* ── Barre filtres + tri ───────────────── */
+.co-filterbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* ── Filtres ───────────────────────────── */
+.co-filters {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.co-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: var(--font-family);
+}
+
+.co-filter-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.co-filter-btn.active {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-primary);
+}
+
+.co-filter-btn.active:hover {
+  background: var(--color-primary-dark);
+}
+
+.co-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  background: rgba(255,255,255,0.25);
+  line-height: 1;
+}
+
+.co-filter-btn:not(.active) .co-filter-count {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+}
+
+/* ── Tri ───────────────────────────────── */
+.co-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.co-sort-icon {
+  color: var(--color-text-muted);
+}
+
+.co-sort-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.co-sort-select {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.co-sort-select:hover {
+  border-color: var(--color-primary);
+}
+
+.co-sort-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-muted);
+}
+
+/* ── Grid commandes ────────────────────── */
+.co-orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ── Order Card ────────────────────────── */
+.order-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: all var(--transition-normal);
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border);
+}
+
+.order-card--clickable {
+  cursor: pointer;
+}
+
+.order-card--clickable:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Top : ID + statut */
+.order-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-card-id {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  background: var(--color-bg-subtle);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+}
+
+/* Total */
+.order-card-total {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: 1;
+}
+
+/* Meta dates */
+.order-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.order-card-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Articles compacts */
+.order-card-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  background: var(--color-bg-subtle);
+  border-radius: var(--radius-md);
+}
+
+.order-card-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.order-card-item-service {
+  margin-left: auto;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.order-card-item-qty {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-semibold);
+}
+
+.order-card-more {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  padding-top: var(--space-1);
+  border-top: 1px dashed var(--color-border);
+  margin-top: var(--space-1);
+}
+
+/* ── Responsive ────────────────────────── */
+@media (max-width: 768px) {
+  .client-orders-page {
+    padding: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .co-client-card {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .co-client-stats {
+    width: 100%;
+    justify-content: space-between;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .co-orders-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .co-title {
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* ── Highlight commande ciblée depuis GlobalSearch ──────────────────────── */
+.co-order-highlighted .order-card {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--color-primary-muted);
+  animation: pulse-highlight 1.5s ease-out;
+}
+
+@keyframes pulse-highlight {
+  0%   { box-shadow: 0 0 0 0   var(--color-primary-muted); }
+  50%  { box-shadow: 0 0 0 8px var(--color-primary-muted); }
+  100% { box-shadow: 0 0 0 4px var(--color-primary-muted); }
+}

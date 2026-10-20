@@ -1,0 +1,224 @@
+/* ============================================================
+   NOTIFICATIONS.CSS — variables design-system Pressing
+   ============================================================ */
+
+/* ── Page ── */
+/* Padding et fond gérés par .main-content (Layout.css) */
+.notifications-page {
+  min-height: 100%;
+}
+
+/* ── Onglets ── */
+.notif-tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  border-bottom: 2px solid var(--color-border-light);
+  padding-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.notif-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.notif-tab:hover {
+  color: var(--color-text);
+}
+
+.notif-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* Badge de count dans les onglets */
+.notif-tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+/* On réutilise les badges du design-system mais sans le ::before */
+.notif-tab-badge.badge-danger::before,
+.notif-tab-badge.badge-info::before,
+.notif-tab-badge.badge-neutral::before {
+  display: none;
+}
+
+/* ── Liste ── */
+.notif-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ── Item ── */
+.notif-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.notif-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.notif-item:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-primary-muted);
+}
+
+.notif-item.is-unread {
+  border-left: 3px solid var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.notif-item.is-read {
+  opacity: 0.7;
+}
+
+/* Point indicateur non-lu */
+.notif-unread-dot {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ── Icône colorée ── */
+.notif-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notif-icon--green {
+  background: var(--color-success-muted);
+  color: var(--color-success);
+}
+
+.notif-icon--red {
+  background: var(--color-danger-muted);
+  color: var(--color-danger);
+}
+
+.notif-icon--orange {
+  background: var(--color-warning-muted);
+  color: var(--color-warning);
+}
+
+/* ── Contenu ── */
+.notif-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.notif-content-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.notif-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.notif-time {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.notif-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Badges dans l'item ── */
+.notif-badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-1);
+}
+
+.notif-badges .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Supprimer le dot pour le badge-neutral dans les items */
+.notif-badges .badge-neutral::before {
+  display: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .notifications-page {
+    padding: var(--space-4);
+  }
+
+  .notif-item {
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .notif-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .notif-content-top {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+}

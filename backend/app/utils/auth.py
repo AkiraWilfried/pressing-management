@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -51,6 +51,7 @@ def decode_token(token: str) -> dict:
 # ── Dépendance FastAPI ────────────────────────────────────────────────────────
 
 def get_current_user(
+    request: Request,
     token: Annotated[str, Depends(oauth2_scheme)],
     db: Annotated[Session, Depends(get_db)],
 ) -> User:
@@ -71,13 +72,14 @@ def get_current_user(
             detail="Utilisateur introuvable",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return user
-
-
-def require_admin(current_user: Annotated[User, Depends(get_current_user)]) -> User:
-    if current_user.role != "admin":
+    if user.deleted_at is not None:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Accès réservé aux administrateurs",
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Ce compte a été supprimé",
+            headers={"WWW-Authenticate": "Bearer"},
         )
-    return current_user
+
+    # Relu par le middleware de journalisation ; les permissions viennent de la ligne
+    # courante, jamais du claim `role` du JWT, qui n'est pas rafraîchi.
+    request.state.actor = f"{user.role}:{user.nom}"
+    return user

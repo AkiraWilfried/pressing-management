@@ -1,29 +1,42 @@
+from datetime import datetime, timezone
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session, selectinload
 
 from app.database import get_db
+from app.models.client import Client
 from app.models.commande import Commande, CommandeItem
 from app.models.user import User
 from app.schemas.commande import CommandeCreate, CommandeUpdate, CommandeOut
+from app.utils.activity import record
 from app.utils.auth import get_current_user
 from app.utils.id import generate_id
+from app.utils.permissions import require_perm
+from app.utils.query import display_label, get_live
 
 router = APIRouter(prefix="/commandes", tags=["commandes"])
 
 DbDep = Annotated[Session, Depends(get_db)]
-AuthDep = Annotated[User, Depends(get_current_user)]
+CanView = Annotated[User, Depends(require_perm("commandes", "view"))]
+CanCreate = Annotated[User, Depends(require_perm("commandes", "create"))]
+CanEdit = Annotated[User, Depends(require_perm("commandes", "edit"))]
+CanDelete = Annotated[User, Depends(require_perm("commandes", "delete"))]
 
 
-def _load_commande(db: Session, commande_id: str) -> Commande:
-    """Charge une commande avec ses items (eager load)."""
-    commande = (
+def _load_commande(db: Session, commande_id: str, *, include_deleted: bool = False) -> Commande:
+    """Charge une commande avec ses items (eager load), hors corbeille par défaut."""
+    query = (
         db.query(Commande)
         .options(selectinload(Commande.items))
         .filter(Commande.id == commande_id)
-        .first()
     )
+    if not include_deleted:
+        query = query.join(Client, Client.id == Commande.client_id).filter(
+            Commande.deleted_at.is_(None), Client.deleted_at.is_(None)
+        )
+
+    commande = query.first()
     if not commande:
         raise HTTPException(status_code=404, detail="Commande introuvable")
     return commande
@@ -32,22 +45,30 @@ def _load_commande(db: Session, commande_id: str) -> Commande:
 @router.get("", response_model=list[CommandeOut])
 def get_commandes(
     db: DbDep,
-    _: AuthDep,
+    _: CanView,
     client_id: str | None = Query(default=None),
 ):
-    query = db.query(Commande).options(selectinload(Commande.items))
+    # Une commande suit son client : tant que le client est en corbeille, elle reste
+    # hors des listes pour tout le monde — et y revient quand il est restauré.
+    query = (
+        db.query(Commande)
+        .options(selectinload(Commande.items))
+        .join(Client, Client.id == Commande.client_id)
+        .filter(Commande.deleted_at.is_(None), Client.deleted_at.is_(None))
+    )
     if client_id:
         query = query.filter(Commande.client_id == client_id)
     return query.order_by(Commande.date_depot.desc()).all()
 
 
 @router.get("/{commande_id}", response_model=CommandeOut)
-def get_commande(commande_id: str, db: DbDep, _: AuthDep):
+def get_commande(commande_id: str, db: DbDep, _: CanView):
     return _load_commande(db, commande_id)
 
 
 @router.post("", response_model=CommandeOut, status_code=status.HTTP_201_CREATED)
-def create_commande(body: CommandeCreate, db: DbDep, _: AuthDep):
+def create_commande(body: CommandeCreate, db: DbDep, _: CanCreate):
+    get_live(db, Client, body.client_id)  # un panier vers un client en corbeille est un 404
     commande_id = generate_id()
 
     # Calcul du total depuis les items
@@ -80,7 +101,7 @@ def create_commande(body: CommandeCreate, db: DbDep, _: AuthDep):
 
 
 @router.put("/{commande_id}", response_model=CommandeOut)
-def update_commande(commande_id: str, body: CommandeUpdate, db: DbDep, _: AuthDep):
+def update_commande(commande_id: str, body: CommandeUpdate, db: DbDep, _: CanEdit):
     commande = _load_commande(db, commande_id)
 
     # Mise à jour des champs scalaires
@@ -118,10 +139,21 @@ def update_commande(commande_id: str, body: CommandeUpdate, db: DbDep, _: AuthDe
     return _load_commande(db, commande_id)
 
 
-@router.delete("/{commande_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_commande(commande_id: str, db: DbDep, _: AuthDep):
-    commande = db.get(Commande, commande_id)
-    if not commande:
-        raise HTTPException(status_code=404, detail="Commande introuvable")
-    db.delete(commande)
+@router.delete("/{commande_id}", response_model=CommandeOut)
+def delete_commande(commande_id: str, db: DbDep, actor: CanDelete):
+    """Les items suivent le drapeau du parent — ils n'ont pas de soft-delete propre."""
+    commande = _load_commande(db, commande_id)
+    commande.deleted_at = datetime.now(timezone.utc)
+    commande.deleted_by = actor.id
+
+    record(
+        db,
+        module="commandes",
+        entity_id=commande.id,
+        entity_label=display_label(commande),
+        action="delete",
+        actor=actor,
+    )
+
     db.commit()
+    return _load_commande(db, commande_id, include_deleted=True)

@@ -1,10 +1,10 @@
 from sqlalchemy import Column, String, Float, DateTime, Enum, ForeignKey, Integer, JSON
 from sqlalchemy.orm import relationship
 
-from app.database import Base
+from app.database import Base, SoftDeletable
 
 
-class Commande(Base):
+class Commande(Base, SoftDeletable):
     __tablename__ = "commandes"
 
     id = Column(String, primary_key=True, index=True)
@@ -25,6 +25,8 @@ class Commande(Base):
 
 
 class CommandeItem(Base):
+    """Pas de soft-delete : un item n'est visible que via sa commande, le drapeau du parent suffit."""
+
     __tablename__ = "commande_items"
 
     id = Column(String, primary_key=True, index=True)

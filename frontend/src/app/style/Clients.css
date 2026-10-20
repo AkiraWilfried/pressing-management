@@ -1,0 +1,224 @@
+/* ============================================
+   CLIENTS — styles spécifiques
+   Utilise les variables du design-system.css
+   ============================================ */
+
+/* ── PAGE ─────────────────────────────────────── */
+/* Padding et fond gérés par .main-content (Layout.css) */
+.clients-page {
+  min-height: 100%;
+}
+
+/* ── STATS GRID ───────────────────────────────── */
+.clients-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+/* ── BARRE DE RECHERCHE ───────────────────────── */
+.clients-search {
+  margin-bottom: var(--space-6);
+}
+
+.clients-search .input-with-icon .input {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  font-size: var(--font-size-sm);
+  height: 48px;
+}
+
+/* ── GRILLE CLIENTS ───────────────────────────── */
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-5);
+}
+
+/* ── CLIENT CARD ──────────────────────────────── */
+.client-card {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-5);
+  padding-top: calc(var(--space-5) + 4px);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  overflow: hidden;
+}
+
+.client-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Bandeau coloré en haut */
+.client-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-success));
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+/* ── HEADER DE LA CARD ────────────────────────── */
+.client-card-header {
+  margin-bottom: var(--space-4);
+}
+
+.client-card-identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.client-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.client-identity-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.client-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.client-since {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ── CONTACT ──────────────────────────────────── */
+.client-contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-subtle);
+  border-radius: var(--radius-md);
+}
+
+.client-contact-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.client-contact-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ── STATS ────────────────────────────────────── */
+.client-stats-row {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.client-stat {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.client-stat-icon-wrap {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-muted);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.client-stat-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+
+.client-stat-value {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+/* ── BOUTONS D'ACTION ─────────────────────────── */
+.client-card-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.client-card-actions .btn {
+  flex: 1;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  padding: 0.5rem var(--space-2);
+}
+
+.client-btn-view:hover {
+  background: var(--color-primary-muted);
+  color: var(--color-primary);
+  border-color: var(--color-primary-muted);
+}
+
+.client-btn-edit:hover {
+  background: var(--color-info-muted);
+  color: var(--color-info);
+  border-color: var(--color-info-muted);
+}
+
+/* ── RESPONSIVE ────────────────────────────────── */
+@media (max-width: 1024px) {
+  .clients-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .clients-page {
+    padding: var(--space-4);
+  }
+
+  .clients-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .clients-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,186 @@
+/* ============================================================
+   PAIEMENTS.CSS — utilise exclusivement les variables
+   du design-system.css de Pressing
+   ============================================================ */
+
+/* ── Page container ── */
+/* Padding et fond gérés par .main-content (Layout.css) */
+.paiements-page {
+  min-height: 100%;
+}
+
+/* ── Stat grid (3 colonnes) ── */
+.paiements-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+@media (max-width: 900px) {
+  .paiements-stats { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 580px) {
+  .paiements-stats { grid-template-columns: 1fr; }
+}
+
+/* ── Table card ── */
+.paiements-table-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.paiements-table-card .card-header {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: 0;
+}
+
+/* ── Table cells ── */
+.paiements-date {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+.paiements-client {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.paiements-commande {
+  font-size: var(--font-size-sm);
+}
+
+.commande-ref {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-family: monospace;
+}
+
+.paiements-amount {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+}
+
+/* Badge sans point (override) */
+.badge-no-dot::before {
+  display: none;
+}
+
+.badge-no-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ── Modal paiement ── */
+.paiements-modal {
+  max-width: 520px;
+}
+
+/* ── Commande summary ── */
+.commande-summary {
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-sm);
+}
+
+.summary-row span {
+  color: var(--color-text-muted);
+}
+
+.summary-row strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.summary-reste {
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border-light);
+  margin-top: var(--space-1);
+}
+
+.text-success { color: var(--color-success) !important; }
+.text-danger  { color: var(--color-danger)  !important; }
+
+/* ── Payment mode cards ── */
+.payment-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 480px) {
+  .payment-mode-grid { grid-template-columns: 1fr; }
+}
+
+.payment-mode-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  background: var(--color-surface);
+  text-align: center;
+}
+
+.payment-mode-card input[type="radio"] {
+  display: none;
+}
+
+.payment-mode-card:hover {
+  background: var(--color-bg-subtle);
+  border-color: var(--color-primary);
+}
+
+.payment-mode-card.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.pmc-icon {
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+}
+
+.payment-mode-card.active .pmc-icon {
+  color: var(--color-primary-dark);
+}
+
+.pmc-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.payment-mode-card.active .pmc-label {
+  color: var(--color-primary-dark);
+}

@@ -1,0 +1,192 @@
+/* ============================================
+   DASHBOARD — styles spécifiques
+   Utilise les variables du design-system.css
+   ============================================ */
+
+/* ── PAGE ─────────────────────────────────────── */
+/* Padding et fond gérés par .main-content (Layout.css) */
+.dashboard-page {
+  min-height: 100%;
+}
+
+/* ── DATE BADGE ───────────────────────────────── */
+.dashboard-date-badge {
+  padding: 0.625rem var(--space-5);
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+/* ── STATS GRID ───────────────────────────────── */
+.stats-grid {
+  margin-bottom: var(--space-6);
+}
+
+/* ── DASHBOARD GRID (chart + activity) ────────── */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+/* ── CHART CARD ───────────────────────────────── */
+.dashboard-chart-card {
+  /* hérite de .card */
+}
+
+/* ── CUSTOM TOOLTIP ───────────────────────────── */
+.chart-tooltip {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  box-shadow: var(--shadow-md);
+}
+
+.chart-tooltip-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: capitalize;
+  margin-bottom: var(--space-1);
+}
+
+.chart-tooltip-value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-success);
+}
+
+/* ── ACTIVITY CARD ────────────────────────────── */
+.dashboard-activity-card {
+  /* hérite de .card */
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  gap: var(--space-3);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.activity-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-muted);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.activity-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.activity-client {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-amount {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-success);
+  white-space: nowrap;
+}
+
+/* ── TABLE CARD ────────────────────────────────── */
+.table-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+/* ── STATUS BADGES (dans la table) ────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.status-badge.en-cours  { background: var(--color-info-muted);    color: var(--color-info);    }
+.status-badge.prêt      { background: var(--color-success-muted); color: var(--color-success); }
+.status-badge.lavé,
+.status-badge.repassé   { background: var(--color-warning-muted); color: var(--color-warning); }
+.status-badge.retiré    { background: #f1f5f9; color: var(--color-text-secondary); }
+.status-badge.en-retard { background: var(--color-danger-muted);  color: var(--color-danger);  }
+
+/* ── RESPONSIVE ────────────────────────────────── */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-page {
+    padding: var(--space-4);
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .dashboard-date-badge {
+    display: none;
+  }
+}

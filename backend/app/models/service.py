@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, Integer, Float
 
-from app.database import Base
+from app.database import Base, SoftDeletable
 
 
-class Service(Base):
+class Service(Base, SoftDeletable):
     __tablename__ = "services"
 
     id = Column(String, primary_key=True, index=True)

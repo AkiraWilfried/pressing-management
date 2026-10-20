@@ -1,0 +1,214 @@
+/* ============================================
+   ORDER DETAIL — vue lecture seule d'une commande
+   Réutilise .modal-overlay / .modal / .modal-header / .modal-body / .modal-footer
+   du design-system.css.
+   ============================================ */
+
+.order-detail-modal {
+  max-width: 560px;
+  max-height: calc(100vh - 4rem);
+}
+
+/* Le corps scrolle, header/footer restent visibles */
+.order-detail-modal .modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  gap: var(--space-5);
+}
+.order-detail-modal .modal-body::-webkit-scrollbar { width: 6px; }
+.order-detail-modal .modal-body::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+.order-detail-modal .modal-footer { flex-shrink: 0; }
+
+/* --- Header --- */
+.od-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.od-id {
+  display: inline-block;
+  margin-top: var(--space-1);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  background: var(--color-bg-subtle);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+/* --- Client --- */
+.od-client {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.od-client-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.od-client-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.od-client-name {
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+}
+
+.od-client-line {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* --- Dates --- */
+.od-dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.od-date {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.od-date-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.od-date-value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+/* --- Sections --- */
+.od-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.od-section-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+}
+
+/* --- Items --- */
+.od-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.od-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.od-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.od-item-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.od-item-service {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.od-item-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.od-item-meta strong {
+  margin-left: auto;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+/* Références */
+.od-refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-top: var(--space-1);
+}
+
+.od-ref-chip {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+}
+
+.od-no-refs {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* --- Footer --- */
+.od-footer { justify-content: space-between; }
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .od-dates { grid-template-columns: 1fr; }
+}
